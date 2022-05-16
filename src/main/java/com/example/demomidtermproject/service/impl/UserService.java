@@ -2,8 +2,8 @@ package com.example.demomidtermproject.service.impl;
 
 
 import com.example.demomidtermproject.model.users.User;
-import com.example.demomidtermproject.repository.RoleRepository;
-import com.example.demomidtermproject.repository.UserRepository;
+import com.example.demomidtermproject.repository.users.RoleRepository;
+import com.example.demomidtermproject.repository.users.UserRepository;
 import com.example.demomidtermproject.service.interfaces.UserServiceInterface;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -54,7 +54,7 @@ public class UserService implements UserServiceInterface, UserDetailsService {
             log.info("User is found in the database: {}", username);
             Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
             user.getRoles().forEach(role -> {
-                authorities.add(new SimpleGrantedAuthority(role.getName()));
+                authorities.add(new SimpleGrantedAuthority(role.getRole()));
             });
             return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
         }

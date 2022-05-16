@@ -1,4 +1,4 @@
-package com.example.demomidtermproject.repository;
+package com.example.demomidtermproject.repository.users;
 
 
 import com.example.demomidtermproject.model.users.Role;
