@@ -1,12 +1,12 @@
 package com.example.demomidtermproject.service.impl;
 
 import com.example.demomidtermproject.DTO.AccountHolderDTO;
-import com.example.demomidtermproject.model.users.AccountHolder;
-import com.example.demomidtermproject.model.users.Role;
-import com.example.demomidtermproject.model.users.User;
-import com.example.demomidtermproject.repository.accounts.AccountHolderRepository;
-import com.example.demomidtermproject.repository.users.RoleRepository;
-import com.example.demomidtermproject.repository.users.UserRepository;
+import com.example.demomidtermproject.model.classes.AccountHolder;
+import com.example.demomidtermproject.model.classes.Role;
+import com.example.demomidtermproject.model.classes.User;
+import com.example.demomidtermproject.repository.AccountHolderRepository;
+import com.example.demomidtermproject.repository.RoleRepository;
+import com.example.demomidtermproject.repository.UserRepository;
 import com.example.demomidtermproject.service.interfaces.AccountHolderServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,7 +41,7 @@ public class AccountHolderService implements AccountHolderServiceInterface {
            AccountHolder newUser = new AccountHolder(newAccountHolder.getUsername(), newAccountHolder.getPassword(),
                    newAccountHolder.getName(), newAccountHolder.getBirthday(), newAccountHolder.getPrimaryAddress(),
                    newAccountHolder.getMailingAddress());
-           newUser.setRoles(Set.of(new Role("ROLE_ACCOUNTHOLDER")));
+           newUser.setRoles(Set.of(new Role("ACCOUNTHOLDER")));
            accountHolderRepository.save(newUser);
            return newUser;
        } else {

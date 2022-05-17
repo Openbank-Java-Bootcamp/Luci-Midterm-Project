@@ -1,6 +1,6 @@
 package com.example.demomidtermproject.DTO;
 
-import com.example.demomidtermproject.classes.Money;
+import com.example.demomidtermproject.model.classes.Money;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;

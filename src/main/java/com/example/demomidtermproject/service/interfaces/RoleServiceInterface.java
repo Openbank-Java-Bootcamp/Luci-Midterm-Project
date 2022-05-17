@@ -1,7 +1,7 @@
 package com.example.demomidtermproject.service.interfaces;
 
 
-import com.example.demomidtermproject.model.users.Role;
+import com.example.demomidtermproject.model.classes.Role;
 
 public interface RoleServiceInterface {
     Role saveRole(Role role);

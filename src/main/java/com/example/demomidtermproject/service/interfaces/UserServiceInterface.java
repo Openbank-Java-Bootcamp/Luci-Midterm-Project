@@ -4,7 +4,7 @@ package com.example.demomidtermproject.service.interfaces;
 
 
 
-import com.example.demomidtermproject.model.users.User;
+import com.example.demomidtermproject.model.classes.User;
 
 import java.util.List;
 

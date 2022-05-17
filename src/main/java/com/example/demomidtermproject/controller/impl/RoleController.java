@@ -2,16 +2,15 @@ package com.example.demomidtermproject.controller.impl;
 
 
 import com.example.demomidtermproject.DTO.RoleToUserDTO;
-import com.example.demomidtermproject.controller.interfaces.IRoleController;
-import com.example.demomidtermproject.model.users.Role;
+import com.example.demomidtermproject.model.classes.Role;
 import com.example.demomidtermproject.service.interfaces.RoleServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
-public class RoleController implements IRoleController {
+@RequestMapping("/api-bank")
+public class RoleController implements com.example.demomidtermproject.controller.interfaces.RoleControllerInterface {
     @Autowired
     private RoleServiceInterface roleService;
 

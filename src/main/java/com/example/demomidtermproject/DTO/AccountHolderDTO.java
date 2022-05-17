@@ -1,6 +1,6 @@
 package com.example.demomidtermproject.DTO;
 
-import com.example.demomidtermproject.classes.Address;
+import com.example.demomidtermproject.model.classes.Address;
 
 import java.time.LocalDate;
 

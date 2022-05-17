@@ -1,9 +1,9 @@
 package com.example.demomidtermproject.service.impl;
 
 
-import com.example.demomidtermproject.model.users.User;
-import com.example.demomidtermproject.repository.users.RoleRepository;
-import com.example.demomidtermproject.repository.users.UserRepository;
+import com.example.demomidtermproject.model.classes.User;
+import com.example.demomidtermproject.repository.RoleRepository;
+import com.example.demomidtermproject.repository.UserRepository;
 import com.example.demomidtermproject.service.interfaces.UserServiceInterface;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ public class UserService implements UserServiceInterface, UserDetailsService {
 
 
     public User saveUser(User user) {
-        log.info("Saving a new User {} inside of the database", user.getName());
+        log.info("Saving a new User {} inside of the database", user.getUsername());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
@@ -44,7 +44,7 @@ public class UserService implements UserServiceInterface, UserDetailsService {
         return userRepository.findAll();
     }
 
-   @Override
+
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
         if(user == null){
