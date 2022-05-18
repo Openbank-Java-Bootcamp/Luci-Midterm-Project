@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-public class AccountHolder extends User {
-    @Column(name = "user_name")
+public class AccountHolderUser extends User {
+    @Column(name = "account_holder_name")
     private String name;
 
     private LocalDate birthday;
@@ -27,30 +27,30 @@ public class AccountHolder extends User {
     })
     private Address mailingAddress;
 
-    public AccountHolder() {
+    public AccountHolderUser() {
     }
 
-    public AccountHolder(String name, LocalDate birthday, Address primaryAddress, Address mailingAddress) {
+    public AccountHolderUser(String name, LocalDate birthday, Address primaryAddress, Address mailingAddress) {
         this.name = name;
         this.birthday = birthday;
         this.primaryAddress = primaryAddress;
         this.mailingAddress = mailingAddress;
     }
 
-    public AccountHolder(String name, LocalDate birthday, Address primaryAddress) {
+    public AccountHolderUser(String name, LocalDate birthday, Address primaryAddress) {
         this.name = name;
         this.birthday = birthday;
         this.primaryAddress = primaryAddress;
     }
 
-    public AccountHolder(String username, String password, String name, LocalDate birthday, Address primaryAddress) {
+    public AccountHolderUser(String username, String password, String name, LocalDate birthday, Address primaryAddress) {
         super(password, username);
         this.name = name;
         this.birthday = birthday;
         this.primaryAddress = primaryAddress;
     }
 
-    public AccountHolder(String username, String password, String name, LocalDate birthday, Address primaryAddress, Address mailingAddress) {
+    public AccountHolderUser(String username, String password, String name, LocalDate birthday, Address primaryAddress, Address mailingAddress) {
         super(password, username);
         this.name = name;
         this.birthday = birthday;

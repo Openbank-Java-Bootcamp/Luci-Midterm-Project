@@ -28,21 +28,21 @@ public class Checking extends Account implements AccountStatus, AccountSecretKey
     public Checking() {
     }
 
-    public Checking(AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, String secretKey, Status status){
+    public Checking(AccountHolderUser primaryOwner, AccountHolderUser secondaryOwner, Money balance, String secretKey, Status status){
         super(primaryOwner, secondaryOwner, balance);
         this.secretKey = secretKey;
         this.status = status;
         this.lastMonthlyMaintenanceFee = LocalDateTime.now();
     }
 
-    public Checking(AccountHolder primaryOwner, Money balance, String secretKey, Status status){
+    public Checking(AccountHolderUser primaryOwner, Money balance, String secretKey, Status status){
         super(balance, primaryOwner);
         this.secretKey = secretKey;
         this.status = status;
         this.lastMonthlyMaintenanceFee = LocalDateTime.now();
     }
 
-    public Checking(AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, String secretKey){
+    public Checking(AccountHolderUser primaryOwner, AccountHolderUser secondaryOwner, Money balance, String secretKey){
         super(primaryOwner, secondaryOwner, balance);
         this.secretKey = secretKey;
         this.lastMonthlyMaintenanceFee = LocalDateTime.now();

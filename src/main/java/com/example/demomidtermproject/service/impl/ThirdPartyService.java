@@ -34,7 +34,8 @@ public class ThirdPartyService implements ThirdPartyServiceInterface {
         if(optionalUser.isEmpty()){
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             newThirdParty.setPassword(passwordEncoder.encode(newThirdParty.getPassword()));
-            ThirdPartyUser thirdPartyUser = new ThirdPartyUser(newThirdParty.getUsername(), newThirdParty.getPassword());
+            ThirdPartyUser thirdPartyUser = new ThirdPartyUser(newThirdParty.getName(),
+                    newThirdParty.getUsername(), newThirdParty.getPassword());
             thirdPartyUser.setRoles(Set.of(new Role("THIRDPARTY")));
             thirdPartyRepository.save(thirdPartyUser);
             return thirdPartyUser;

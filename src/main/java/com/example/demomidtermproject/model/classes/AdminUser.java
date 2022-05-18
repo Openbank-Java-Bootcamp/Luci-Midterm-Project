@@ -4,15 +4,15 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 @Entity
-public class ThirdPartyUser extends User {
-
-    @Column(name = "third_party_name")
+public class AdminUser extends User {
+    @Column(name = "admin_name")
     private String name;
 
-    public ThirdPartyUser() {
+    public AdminUser(){
+
     }
 
-    public ThirdPartyUser(String username, String password, String name) {
+    public AdminUser(String username, String password, String name) {
         super(username, password);
         this.name = name;
     }

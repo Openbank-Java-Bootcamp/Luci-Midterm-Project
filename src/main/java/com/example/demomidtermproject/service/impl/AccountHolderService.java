@@ -1,7 +1,7 @@
 package com.example.demomidtermproject.service.impl;
 
 import com.example.demomidtermproject.DTO.AccountHolderDTO;
-import com.example.demomidtermproject.model.classes.AccountHolder;
+import com.example.demomidtermproject.model.classes.AccountHolderUser;
 import com.example.demomidtermproject.model.classes.Role;
 import com.example.demomidtermproject.model.classes.User;
 import com.example.demomidtermproject.repository.AccountHolderRepository;
@@ -33,12 +33,12 @@ public class AccountHolderService implements AccountHolderServiceInterface {
 
 
 
-    public AccountHolder create(AccountHolderDTO newAccountHolder) {
-       Optional<User> userExists = Optional.ofNullable(userRepository.findByUsername(newAccountHolder.getUsername()));
-       if(userExists.isEmpty()){
+    public AccountHolderUser create(AccountHolderDTO newAccountHolder) {
+       Optional<User> userOptional = Optional.ofNullable(userRepository.findByUsername(newAccountHolder.getUsername()));
+       if(userOptional.isEmpty()){
            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
            newAccountHolder.setPassword(passwordEncoder.encode(newAccountHolder.getPassword()));
-           AccountHolder newUser = new AccountHolder(newAccountHolder.getUsername(), newAccountHolder.getPassword(),
+           AccountHolderUser newUser = new AccountHolderUser(newAccountHolder.getUsername(), newAccountHolder.getPassword(),
                    newAccountHolder.getName(), newAccountHolder.getBirthday(), newAccountHolder.getPrimaryAddress(),
                    newAccountHolder.getMailingAddress());
            newUser.setRoles(Set.of(new Role("ACCOUNTHOLDER")));
@@ -49,7 +49,8 @@ public class AccountHolderService implements AccountHolderServiceInterface {
        }
     }
 
-    public List<AccountHolder> getAll(){
+    public List<AccountHolderUser> getAll(){
+
         return accountHolderRepository.findAll();
     }
 }

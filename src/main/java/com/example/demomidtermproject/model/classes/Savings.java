@@ -33,14 +33,14 @@ public class Savings extends Account implements AccountSecretKey, AccountStatus 
     @Column(precision = 32, scale = 4)
     private BigDecimal interestRate;
 
-    @DecimalMax(value = "1000", message = "Savings account's balance must be below 1000")
-    @DecimalMin(value = "100", message = "Savings account's balance must be above 100")
+    @DecimalMax(value = "1000", message = "Savings' balance must be below 1000")
+    @DecimalMin(value = "100", message = "Savings' balance must be above 100")
     private BigDecimal minimumBalance;
 
     public Savings() {
     }
 
-    public Savings(AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, String secretKey, Status status, BigDecimal interestRate, BigDecimal minimumBalance) {
+    public Savings(AccountHolderUser primaryOwner, AccountHolderUser secondaryOwner, Money balance, String secretKey, Status status, BigDecimal interestRate, BigDecimal minimumBalance) {
         super(primaryOwner, secondaryOwner, balance);
         this.secretKey = secretKey;
         this.status = status;
@@ -49,7 +49,7 @@ public class Savings extends Account implements AccountSecretKey, AccountStatus 
         this.lastInterestRate = LocalDateTime.now();
     }
 
-    public Savings(Money balance, AccountHolder primaryOwner, String secretKey, Status status, BigDecimal interestRate, BigDecimal minimumBalance) {
+    public Savings(Money balance, AccountHolderUser primaryOwner, String secretKey, Status status, BigDecimal interestRate, BigDecimal minimumBalance) {
         super(balance, primaryOwner);
         this.secretKey = secretKey;
         this.status = status;
@@ -58,7 +58,7 @@ public class Savings extends Account implements AccountSecretKey, AccountStatus 
         this.lastInterestRate = LocalDateTime.now();
     }
 
-    public Savings(Money balance, AccountHolder primaryOwner, AccountHolder secondaryOwner,  String secretKey,  BigDecimal interestRate, BigDecimal minimumBalance) {
+    public Savings(Money balance, AccountHolderUser primaryOwner, AccountHolderUser secondaryOwner, String secretKey, BigDecimal interestRate, BigDecimal minimumBalance) {
         super(primaryOwner, secondaryOwner, balance);
         this.secretKey = secretKey;
         setInterestRate(interestRate);
@@ -66,7 +66,7 @@ public class Savings extends Account implements AccountSecretKey, AccountStatus 
         this.lastInterestRate = LocalDateTime.now();
     }
 
-    public Savings(AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, String secretKey) {
+    public Savings(AccountHolderUser primaryOwner, AccountHolderUser secondaryOwner, Money balance, String secretKey) {
         super(primaryOwner, secondaryOwner, balance);
         this.secretKey = secretKey;
         setInterestRate(interestRate);

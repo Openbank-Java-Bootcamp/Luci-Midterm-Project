@@ -20,23 +20,23 @@ public class StudentChecking extends Account implements AccountStatus, AccountSe
     public StudentChecking() {
     }
 
-    public StudentChecking(AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, Status status) {
+    public StudentChecking(AccountHolderUser primaryOwner, AccountHolderUser secondaryOwner, Money balance, Status status) {
         super(primaryOwner, secondaryOwner, balance);
         this.status = status;
     }
 
-    public StudentChecking(AccountHolder primaryOwner, Money balance, Status status) {
+    public StudentChecking(AccountHolderUser primaryOwner, Money balance, Status status) {
         super(balance, primaryOwner);
         this.status = status;
     }
 
-    public StudentChecking(AccountHolder primaryOwner, Money balance, Status status, String secretKey) {
+    public StudentChecking(AccountHolderUser primaryOwner, Money balance, Status status, String secretKey) {
         super(balance, primaryOwner);
         this.status = status;
         this.secretKey = secretKey;
     }
 
-    public StudentChecking(AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance, String secretKey) {
+    public StudentChecking(AccountHolderUser primaryOwner, AccountHolderUser secondaryOwner, Money balance, String secretKey) {
         super(primaryOwner, secondaryOwner, balance);
         this.secretKey = secretKey;
     }

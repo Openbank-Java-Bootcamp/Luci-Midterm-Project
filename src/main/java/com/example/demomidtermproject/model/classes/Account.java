@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class Account {
+public abstract class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -17,11 +17,11 @@ public class Account {
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "primary_owner")
-    private AccountHolder primaryOwner;
+    private AccountHolderUser primaryOwner;
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "secondary_owner")
-    private AccountHolder secondaryOwner;
+    private AccountHolderUser secondaryOwner;
 
     private LocalDateTime creationDate = LocalDateTime.now();
 
@@ -32,19 +32,19 @@ public class Account {
     public Account() {
     }
 
-    public Account(long id, Money balance, AccountHolder primaryOwner, AccountHolder secondaryOwner) {
+    public Account(long id, Money balance, AccountHolderUser primaryOwner, AccountHolderUser secondaryOwner) {
         this.id = id;
         this.balance = balance;
         this.primaryOwner = primaryOwner;
         this.secondaryOwner = secondaryOwner;
     }
 
-    public Account(Money balance, AccountHolder primaryOwner) {
+    public Account(Money balance, AccountHolderUser primaryOwner) {
         this.balance = balance;
         this.primaryOwner = primaryOwner;
     }
 
-    public Account(AccountHolder primaryOwner, AccountHolder secondaryOwner, Money balance) {
+    public Account(AccountHolderUser primaryOwner, AccountHolderUser secondaryOwner, Money balance) {
         this.primaryOwner = primaryOwner;
         this.secondaryOwner = secondaryOwner;
         this.balance = balance;
@@ -66,19 +66,19 @@ public class Account {
         this.balance = balance;
     }
 
-    public AccountHolder getPrimaryOwner() {
+    public AccountHolderUser getPrimaryOwner() {
         return primaryOwner;
     }
 
-    public void setPrimaryOwner(AccountHolder primaryOwner) {
+    public void setPrimaryOwner(AccountHolderUser primaryOwner) {
         this.primaryOwner = primaryOwner;
     }
 
-    public AccountHolder getSecondaryOwner() {
+    public AccountHolderUser getSecondaryOwner() {
         return secondaryOwner;
     }
 
-    public void setSecondaryOwner(AccountHolder secondaryOwner) {
+    public void setSecondaryOwner(AccountHolderUser secondaryOwner) {
         this.secondaryOwner = secondaryOwner;
     }
 

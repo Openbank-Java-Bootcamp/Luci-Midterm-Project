@@ -4,7 +4,7 @@ import com.example.demomidtermproject.DTO.AccountCreationDTO;
 import com.example.demomidtermproject.enums.Status;
 import com.example.demomidtermproject.model.classes.*;
 import com.example.demomidtermproject.model.interfaces.AccountStatus;
-import com.example.demomidtermproject.model.classes.AccountHolder;
+import com.example.demomidtermproject.model.classes.AccountHolderUser;
 import com.example.demomidtermproject.repository.*;
 import com.example.demomidtermproject.service.interfaces.AccountServiceInterface;
 import org.hibernate.Hibernate;
@@ -39,9 +39,9 @@ public class AccountService implements AccountServiceInterface {
     @Override
     public Account create(AccountCreationDTO newAccount) {
         //Admins can create new accounts:
-        AccountHolder primaryOwner = accountHolderRepository.findById(newAccount.getPrimaryOwner())
+        AccountHolderUser primaryOwner = accountHolderRepository.findById(newAccount.getPrimaryOwner())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ("User with id " + newAccount.getPrimaryOwner() + " does not exist")));
-        AccountHolder secondaryOwner = accountHolderRepository.findById(newAccount.getSecondaryOwner()).orElse(null);
+        AccountHolderUser secondaryOwner = accountHolderRepository.findById(newAccount.getSecondaryOwner()).orElse(null);
 
         switch (newAccount.getAccountType()){
             case "savings":

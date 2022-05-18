@@ -1,8 +1,8 @@
 package com.example.demomidtermproject.service.interfaces;
 
 import com.example.demomidtermproject.DTO.AccountHolderDTO;
-import com.example.demomidtermproject.model.classes.AccountHolder;
+import com.example.demomidtermproject.model.classes.AccountHolderUser;
 
 public interface AccountHolderServiceInterface {
-    AccountHolder create(AccountHolderDTO newAccountHolder);
+    AccountHolderUser create(AccountHolderDTO newAccountHolder);
 }
