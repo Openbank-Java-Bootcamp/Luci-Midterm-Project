@@ -6,6 +6,7 @@ In this REST API project I built a banking system. The system has 4 types of Acc
 - Checking
 - Credit Card
 - Savings
+
 It has 3 types of Users too:
 - AccountHolder
 - Admin
