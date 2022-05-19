@@ -1,6 +1,7 @@
 package com.example.demomidtermproject.controller.impl;
 
 import com.example.demomidtermproject.DTO.AccountCreationDTO;
+import com.example.demomidtermproject.DTO.MoneyDTO;
 import com.example.demomidtermproject.controller.interfaces.AccountControllerInterface;
 import com.example.demomidtermproject.model.classes.Account;
 import com.example.demomidtermproject.repository.AccountRepository;
@@ -38,5 +39,11 @@ public class AccountController implements AccountControllerInterface {
     @ResponseStatus(HttpStatus.CREATED)
     public Account create(@RequestBody @Valid AccountCreationDTO accountCreationDTO) {
         return accountService.create(accountCreationDTO);
+    }
+
+    @PatchMapping("/accounts/balance/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateBalance(@PathVariable(name = "id") long id,@RequestBody MoneyDTO moneyDTO){
+        accountService.updateBalance(id,moneyDTO);
     }
 }

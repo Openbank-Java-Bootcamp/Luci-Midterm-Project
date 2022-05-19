@@ -3,6 +3,8 @@ package com.example.demomidtermproject.service.impl;
 import com.example.demomidtermproject.DTO.TransactionDTO;
 import com.example.demomidtermproject.DTO.TransactionThirdPDTO;
 import com.example.demomidtermproject.model.classes.*;
+import com.example.demomidtermproject.model.interfaces.AccountSecretKey;
+import com.example.demomidtermproject.model.interfaces.AccountStatus;
 import com.example.demomidtermproject.repository.*;
 import com.example.demomidtermproject.service.interfaces.TransactionServiceInterface;
 import org.hibernate.Hibernate;
@@ -43,7 +45,7 @@ public class TransactionService implements TransactionServiceInterface {
         Account ownerAccount = (Account) Hibernate.unproxy(accountRepository.findById(transactionDTO.getHoldingAccountId()));
 
         //Check the role and the owner
-        int notAdmin = (int) user.getRoles().stream().filter(x -> x.getRole().equals("ACCOUNTHOLDER")).count();
+        int notAdmin = (int) user.getRoles().stream().filter(x -> x.getName().equals("ROLE_ACCOUNTHOLDER")).count();
         if(!senderAccount.getPrimaryOwner().getId().equals(user.getId()) && notAdmin != 0){
             if(senderAccount.getSecondaryOwner() == null || !senderAccount.getSecondaryOwner().getId().equals(user.getId())){
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You're not the owner of this account");
@@ -75,11 +77,56 @@ public class TransactionService implements TransactionServiceInterface {
 
     @Override
     public void sendMoneyTParty(TransactionThirdPDTO transactionThirdPDTO, User thirdPUser) {
+        int thirdParty = (int) thirdPUser.getRoles().stream().filter(x -> x.getName().equals("ROLE_THIRDPARTY")).count();
+        if(thirdParty != 1) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed to make this transaction");
+        }
+        Optional<Account> optionalAccount = accountRepository.findById(transactionThirdPDTO.getAccountId());
+        if(optionalAccount.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account doesn't exist");
+        }
+        Account transactionAccount = (Account) Hibernate.unproxy(accountRepository.findById(transactionThirdPDTO.getAccountId()));
+        if(!(transactionAccount instanceof AccountSecretKey)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        AccountSecretKey accountSecretKey = (AccountSecretKey) transactionAccount;
+        if(!accountSecretKey.getSecretKey().equals(transactionThirdPDTO.getSecretKey())){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect Secret Key");
+        }
+        transactionAccount.getBalance().increaseAmount(transactionThirdPDTO.getAmount());
+        accountRepository.save(transactionAccount);
+        transactionRepository.save(new Transaction(transactionAccount, transactionThirdPDTO.getAmount()));
 
     }
 
     @Override
     public void receiveMoneyTParty(TransactionThirdPDTO transactionThirdPDTO, User thirdPUser) {
+        int thirdParty = (int) thirdPUser.getRoles().stream().filter(x -> x.getName().equals("ROLE_THIRDPARTY")).count();
+        if(thirdParty != 1) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed to make this transaction");
+        }
+        Optional<Account> optionalAccount = accountRepository.findById(transactionThirdPDTO.getAccountId());
+        if(optionalAccount.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Account doesn't exist");
+        }
+        Account transactionAccount = (Account) Hibernate.unproxy(accountRepository.findById(transactionThirdPDTO.getAccountId()));
+        if(transactionAccount.getBalance().getAmount().compareTo(transactionThirdPDTO.getAmount())< 0){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not enough funds for transaction");
+        }
+        transactionAccount.getBalance().decreaseAmount(transactionThirdPDTO.getAmount());
+        accountRepository.save(transactionAccount);
+        transactionRepository.save(new Transaction(transactionAccount, transactionThirdPDTO.getAmount()));
 
+        if(transactionAccount instanceof Checking) {
+            Checking checking = (Checking) transactionAccount;
+            checking.applyPenaltyFee(checking.getMinimumBalance());
+            checkingRepository.save(checking);
+        }
+        if (transactionAccount instanceof Savings) {
+            Savings savings = (Savings) transactionAccount;
+            savings.applyPenaltyFee(savings.getMinimumBalance());
+            savingsRepository.save(savings);
+        }
+        accountRepository.save(transactionAccount);
     }
 }

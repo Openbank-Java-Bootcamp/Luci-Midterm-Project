@@ -1,6 +1,7 @@
 package com.example.demomidtermproject.service.impl;
 
 
+import com.example.demomidtermproject.model.classes.Role;
 import com.example.demomidtermproject.model.classes.User;
 import com.example.demomidtermproject.repository.RoleRepository;
 import com.example.demomidtermproject.repository.UserRepository;
@@ -54,9 +55,15 @@ public class UserService implements UserServiceInterface, UserDetailsService {
             log.info("User is found in the database: {}", username);
             Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
             user.getRoles().forEach(role -> {
-                authorities.add(new SimpleGrantedAuthority(role.getRole()));
+                authorities.add(new SimpleGrantedAuthority(role.getName()));
             });
             return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
         }
+    }
+
+    @Override
+    public Role saveRole(Role role) {
+        log.info("Saving new role {} to the database", role.getName());
+        return roleRepository.save(role);
     }
 }

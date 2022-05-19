@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Currency;
 
+
 public class MoneyDTO {
 
     @NotNull
@@ -15,6 +16,11 @@ public class MoneyDTO {
     private BigDecimal amount;
 
     public MoneyDTO() {
+    }
+
+    public MoneyDTO(String currency, BigDecimal amount) {
+        this.currency = currency;
+        this.amount = amount;
     }
 
     public String getCurrency() {

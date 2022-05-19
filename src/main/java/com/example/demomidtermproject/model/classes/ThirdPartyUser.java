@@ -2,26 +2,20 @@ package com.example.demomidtermproject.model.classes;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotEmpty;
+
+import java.util.Collection;
 
 @Entity
 public class ThirdPartyUser extends User {
 
-    @Column(name = "third_party_name")
-    private String name;
 
     public ThirdPartyUser() {
     }
 
-    public ThirdPartyUser(String username, String password, String name) {
-        super(username, password);
-        this.name = name;
+    public ThirdPartyUser(String name, String username, String password) {
+        super(name, username, password);
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 }

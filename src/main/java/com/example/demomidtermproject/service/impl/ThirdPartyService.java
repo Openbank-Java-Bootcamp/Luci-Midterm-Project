@@ -36,7 +36,7 @@ public class ThirdPartyService implements ThirdPartyServiceInterface {
             newThirdParty.setPassword(passwordEncoder.encode(newThirdParty.getPassword()));
             ThirdPartyUser thirdPartyUser = new ThirdPartyUser(newThirdParty.getName(),
                     newThirdParty.getUsername(), newThirdParty.getPassword());
-            thirdPartyUser.setRoles(Set.of(new Role("THIRDPARTY")));
+            thirdPartyUser.setRoles(newThirdParty.getRoles());
             thirdPartyRepository.save(thirdPartyUser);
             return thirdPartyUser;
         }else {

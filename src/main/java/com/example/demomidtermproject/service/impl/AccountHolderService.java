@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -31,22 +32,20 @@ public class AccountHolderService implements AccountHolderServiceInterface {
     @Autowired
     private RoleRepository roleRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
-    public AccountHolderUser create(AccountHolderDTO newAccountHolder) {
-       Optional<User> userOptional = Optional.ofNullable(userRepository.findByUsername(newAccountHolder.getUsername()));
-       if(userOptional.isEmpty()){
-           PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-           newAccountHolder.setPassword(passwordEncoder.encode(newAccountHolder.getPassword()));
-           AccountHolderUser newUser = new AccountHolderUser(newAccountHolder.getUsername(), newAccountHolder.getPassword(),
-                   newAccountHolder.getName(), newAccountHolder.getBirthday(), newAccountHolder.getPrimaryAddress(),
-                   newAccountHolder.getMailingAddress());
-           newUser.setRoles(Set.of(new Role("ACCOUNTHOLDER")));
-           accountHolderRepository.save(newUser);
-           return newUser;
-       } else {
-           throw (new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already exists"));
-       }
+    public AccountHolderUser saveAccountHolderUser(AccountHolderUser accountHolderUser) {
+
+        Optional<User> userOptional = Optional.ofNullable(accountHolderRepository.findByUsername(accountHolderUser.getUsername()));
+        if(userOptional.isEmpty()){
+            accountHolderUser.setPassword(passwordEncoder.encode(accountHolderUser.getPassword()));
+            AccountHolderUser newUser = accountHolderRepository.save(accountHolderUser);
+            return newUser;
+        } else {
+            throw (new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already exists"));
+        }
     }
 
     public List<AccountHolderUser> getAll(){

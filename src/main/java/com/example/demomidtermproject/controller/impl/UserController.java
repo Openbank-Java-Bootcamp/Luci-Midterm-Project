@@ -41,9 +41,5 @@ public class UserController implements UserControllerInterface {
         return userRepository.findById(id).get();
     }
 
-    @GetMapping("/users/{username}")
-    @ResponseStatus(HttpStatus.OK)
-    public User findByUsername(@PathVariable(name = "username") String username){
-        return userRepository.findByUsername(username);
-    }
+
 }

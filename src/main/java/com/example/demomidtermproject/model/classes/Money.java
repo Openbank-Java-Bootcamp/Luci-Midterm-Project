@@ -1,6 +1,7 @@
 package com.example.demomidtermproject.model.classes;
 
 import jakarta.persistence.Embeddable;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -21,6 +22,10 @@ public class Money {
     public Money(BigDecimal amount, Currency currency, RoundingMode rounding) {
         this.currency = currency;
         setAmount(amount.setScale(currency.getDefaultFractionDigits(), rounding));
+    }
+
+    public Money(){
+        this(new BigDecimal("0"), USD, DEFAULT_ROUNDING);
     }
 
     /**

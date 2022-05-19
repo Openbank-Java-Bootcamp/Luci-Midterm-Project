@@ -42,10 +42,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         customAuthenticationFilter.setFilterProcessesUrl("/api-bank/login");
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(STATELESS);
-        http.authorizeRequests().antMatchers(GET, "/api-bank/**").hasRole("ADMIN");
-        http.authorizeRequests().antMatchers(POST, "/api-bank/**").hasRole("ADMIN");
-        http.authorizeRequests().antMatchers(GET, "/api-bank/accounts/user").authenticated();
-        http.authorizeRequests().antMatchers(POST, "/api-bank/transactions").authenticated();
+        http.authorizeRequests().antMatchers("/api-bank/login/**").permitAll();
+        http.authorizeRequests().antMatchers(GET,"/api-bank/users").permitAll();
+        http.authorizeRequests().antMatchers(GET, "/api-bank/**").hasAnyAuthority("ROLE_ADMIN");
+        http.authorizeRequests().antMatchers(POST, "/api-bank/**").hasAnyAuthority("ROLE_ADMIN");
+        http.authorizeRequests().antMatchers(POST, "/api-bank/accounts").hasAnyAuthority("ROLE_ADMIN");
+        http.authorizeRequests().antMatchers(POST, "/api-bank/transactions").hasAnyAuthority("ROLE_THIRDPARTY");
         http.authorizeRequests().anyRequest().permitAll();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

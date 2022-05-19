@@ -33,7 +33,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
         @Override
         protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain
                 filterChain) throws ServletException, IOException {
-            if(request.getServletPath().equals("/api/login")) {
+            if(request.getServletPath().equals("/api-bank/login")) {
                 filterChain.doFilter(request, response);
             } else {
                 String authorizationHeader = request.getHeader(AUTHORIZATION);

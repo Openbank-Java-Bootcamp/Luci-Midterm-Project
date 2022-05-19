@@ -1,6 +1,7 @@
 package com.example.demomidtermproject.service.impl;
 
 import com.example.demomidtermproject.DTO.AccountCreationDTO;
+import com.example.demomidtermproject.DTO.MoneyDTO;
 import com.example.demomidtermproject.enums.Status;
 import com.example.demomidtermproject.model.classes.*;
 import com.example.demomidtermproject.model.interfaces.AccountStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Currency;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,7 +44,7 @@ public class AccountService implements AccountServiceInterface {
         AccountHolderUser primaryOwner = accountHolderRepository.findById(newAccount.getPrimaryOwner())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ("User with id " + newAccount.getPrimaryOwner() + " does not exist")));
         AccountHolderUser secondaryOwner = accountHolderRepository.findById(newAccount.getSecondaryOwner()).orElse(null);
-
+        //Each type of account
         switch (newAccount.getAccountType()){
             case "savings":
                 if(newAccount.getSavingsInterestRate().compareTo(new BigDecimal("0.5")) > 0){
@@ -55,7 +57,7 @@ public class AccountService implements AccountServiceInterface {
                 Savings savings = new Savings(newAccount.getBalance().toMoney(), primaryOwner, secondaryOwner, newAccount.getSecretKey(),
                         newAccount.getSavingsInterestRate(), newAccount.getSavingsMinimumBalance());
                 if(savings.getBalance().getAmount().compareTo(savings.getMinimumBalance()) < 0) {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Savings account balance must be above "
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Savings account balance must be above 0"
                             + newAccount.getSavingsMinimumBalance() + " " + savings.getBalance().getCurrency());
                 }
 
@@ -90,7 +92,6 @@ public class AccountService implements AccountServiceInterface {
                 if(creditCard.getBalance().getAmount().compareTo(creditCard.getCreditLimit()) > 0){
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Credit card account balance must be below "
                             + newAccount.getCreditCardLimit() + " " + creditCard.getBalance().getCurrency());
-
                 }
                 return creditCardRepository.save(creditCard);
 
@@ -126,8 +127,24 @@ public class AccountService implements AccountServiceInterface {
         return accountRepository.findAll();
     }
 
+    public void updateBalance(long id, MoneyDTO moneyDTO) {
+        Optional<Account> account = accountRepository.findById(id);
+        if (account.isPresent()) {
+            try {
+                System.out.println(moneyDTO.getCurrency());
+                System.out.println(moneyDTO.getAmount());
+                account.get().setBalance(new Money(moneyDTO.getAmount(), Currency.getInstance(moneyDTO.getCurrency())));
+                accountRepository.save(account.get());
+            } catch (Exception e) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Balance not valid.");
+            }
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The accountId doesn't exist.");
+        }
+    }
 
-    @Override
+
+   /* @Override
     public Account changeStatus(Long id, Status status) {
         Optional<Account> optionalAccount = accountRepository.findById(id);
         if(optionalAccount.isEmpty()){
@@ -144,5 +161,5 @@ public class AccountService implements AccountServiceInterface {
                 return accountRepository.save(account);
             }
         }
-    }
+    }*/
 }

@@ -37,7 +37,7 @@ public class AccountHolderController implements AccountHolderControllerInterface
 
     @PostMapping("/users/account-holders")
     @ResponseStatus(HttpStatus.CREATED)
-    public AccountHolderUser create(@RequestBody @Valid AccountHolderDTO accountHolderDTO){
-        return accountHolderService.create(accountHolderDTO);
+    public AccountHolderUser create(@RequestBody @Valid AccountHolderUser accountHolderUser){
+        return accountHolderService.saveAccountHolderUser(accountHolderUser);
     }
 }

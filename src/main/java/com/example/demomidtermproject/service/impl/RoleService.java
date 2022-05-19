@@ -24,14 +24,14 @@ public class RoleService implements RoleServiceInterface {
 
 
     public Role saveRole(Role role) {
-        log.info("Saving a new role {} to the database", role.getRole());
+        log.info("Saving a new role {} to the database", role.getName());
         return roleRepository.save(role);
     }
 
-    public void addRoleToUser(String username, String role) {
+    public void addRoleToUser(String username, String roleName) {
         User user = userRepository.findByUsername(username);
-        Role role1 = roleRepository.findByRole(role);
-        user.getRoles().add(role1);
+        Role role = roleRepository.findByName(roleName);
+        user.getRoles().add(role);
         userRepository.save(user);
     }
 }
