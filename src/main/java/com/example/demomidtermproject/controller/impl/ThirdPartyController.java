@@ -22,19 +22,19 @@ public class ThirdPartyController implements ThirdPartyControllerInterface {
     @Autowired
     private ThirdPartyRepository thirdPartyRepository;
 
-    @GetMapping("/users/third-party")
+    @GetMapping("/users/third-parties")
     @ResponseStatus(HttpStatus.OK)
     public List<ThirdPartyUser> getAll() {
         return thirdPartyRepository.findAll();
     }
 
-    @GetMapping("/users/third-party/{id}")
+    @GetMapping("/users/third-parties/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Optional<ThirdPartyUser> getById(@PathVariable(name = "id") long id) {
         return thirdPartyRepository.findById(id);
     }
 
-    @PostMapping("/users/third-party")
+    @PostMapping("/users/third-parties")
     @ResponseStatus(HttpStatus.CREATED)
     public ThirdPartyUser create(@RequestBody @Valid ThirdPartyUser thirdPartyUser){
         return thirdPartyService.create(thirdPartyUser);

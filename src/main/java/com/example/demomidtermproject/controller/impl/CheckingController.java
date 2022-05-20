@@ -18,7 +18,7 @@ public class CheckingController implements CheckingControllerInterface {
     @Autowired
     private CheckingService checkingService;
 
-    @GetMapping("/accounts/checking")
+    @GetMapping("/accounts/checkings")
     @ResponseStatus(HttpStatus.OK)
     public List<Checking> getAll() {
         return checkingService.getAll();
