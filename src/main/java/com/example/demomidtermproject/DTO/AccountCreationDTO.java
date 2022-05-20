@@ -114,4 +114,19 @@ public class AccountCreationDTO {
     public void setSavingsMinimumBalance(BigDecimal savingsMinimumBalance) {
         this.savingsMinimumBalance = savingsMinimumBalance;
     }
+
+    @Override
+    public String toString() {
+        return "AccountCreationDTO{" +
+                "primaryOwner=" + primaryOwner +
+                ", secondaryOwner=" + secondaryOwner +
+                ", balance=" + balance +
+                ", secretKey='" + secretKey + '\'' +
+                ", accountType='" + accountType + '\'' +
+                ", creditCardInterestRate=" + creditCardInterestRate +
+                ", creditCardLimit=" + creditCardLimit +
+                ", savingsInterestRate=" + savingsInterestRate +
+                ", savingsMinimumBalance=" + savingsMinimumBalance +
+                '}';
+    }
 }

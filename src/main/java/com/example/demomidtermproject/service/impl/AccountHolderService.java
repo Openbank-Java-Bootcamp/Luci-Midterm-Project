@@ -38,9 +38,10 @@ public class AccountHolderService implements AccountHolderServiceInterface {
 
     public AccountHolderUser saveAccountHolderUser(AccountHolderUser accountHolderUser) {
 
-        Optional<User> userOptional = Optional.ofNullable(accountHolderRepository.findByUsername(accountHolderUser.getUsername()));
+        Optional<User> userOptional = accountHolderRepository.findByUsername(accountHolderUser.getUsername());
         if(userOptional.isEmpty()){
             accountHolderUser.setPassword(passwordEncoder.encode(accountHolderUser.getPassword()));
+            accountHolderUser.setRoles(List.of(roleRepository.findByName("ROLE_ACCOUNTHOLDER")));
             AccountHolderUser newUser = accountHolderRepository.save(accountHolderUser);
             return newUser;
         } else {

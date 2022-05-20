@@ -22,11 +22,11 @@ public class TransactionController implements TransactionControllerInterface {
 
     @PostMapping("/transactions")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void makeTransaction(@RequestBody @Valid TransactionDTO transactionDTO, User user){
+    public void makeTransaction(@RequestBody @Valid TransactionDTO transactionDTO, @RequestBody User user){
         transactionService.makeTransaction(transactionDTO, user);
     }
 
-    @PostMapping("/transactions/thirdparty-send")
+   /* @PostMapping("/transactions/thirdparty-send")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void sendMoneyThirdParty(@RequestBody @Valid TransactionThirdPDTO transaction, ThirdPartyUser user){
         transactionService.sendMoneyTParty(transaction, user);
@@ -36,5 +36,5 @@ public class TransactionController implements TransactionControllerInterface {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void receiveMoneyThirdParty(@RequestBody @Valid TransactionThirdPDTO transaction, ThirdPartyUser user){
         transactionService.receiveMoneyTParty(transaction, user);
-    }
+    }*/
 }

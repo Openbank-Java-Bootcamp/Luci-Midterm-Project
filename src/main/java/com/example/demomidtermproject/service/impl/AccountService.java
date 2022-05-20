@@ -41,6 +41,8 @@ public class AccountService implements AccountServiceInterface {
     @Override
     public Account create(AccountCreationDTO newAccount) {
         //Admins can create new accounts:
+        System.out.println(newAccount.toString());
+        System.out.println(accountHolderRepository.findAll());
         AccountHolderUser primaryOwner = accountHolderRepository.findById(newAccount.getPrimaryOwner())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, ("User with id " + newAccount.getPrimaryOwner() + " does not exist")));
         AccountHolderUser secondaryOwner = accountHolderRepository.findById(newAccount.getSecondaryOwner()).orElse(null);

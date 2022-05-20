@@ -47,7 +47,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(GET, "/api-bank/**").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests().antMatchers(POST, "/api-bank/**").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests().antMatchers(POST, "/api-bank/accounts").hasAnyAuthority("ROLE_ADMIN");
-        http.authorizeRequests().antMatchers(POST, "/api-bank/transactions").hasAnyAuthority("ROLE_THIRDPARTY");
+        http.authorizeRequests().antMatchers(POST, "/api-bank/transactions").hasAnyAuthority("ROLE_ACCOUNTHOLDER");
+        http.authorizeRequests().antMatchers(POST, "/api-bank/transactions/thirdparty-send").hasAnyAuthority("ROLE_ACCOUNTHOLDER");
+        http.authorizeRequests().antMatchers(POST, "/api-bank/transactions/thirdparty-receive").hasAnyAuthority("ROLE_ACCOUNTHOLDER");
         http.authorizeRequests().anyRequest().permitAll();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -1,5 +1,6 @@
 package com.example.demomidtermproject.service.impl;
 
+import com.example.demomidtermproject.DTO.AccountHolderDTO;
 import com.example.demomidtermproject.DTO.TransactionDTO;
 import com.example.demomidtermproject.DTO.TransactionThirdPDTO;
 import com.example.demomidtermproject.model.classes.*;
@@ -10,6 +11,8 @@ import com.example.demomidtermproject.service.interfaces.TransactionServiceInter
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -35,6 +38,13 @@ public class TransactionService implements TransactionServiceInterface {
 
     @Override
     public void makeTransaction(TransactionDTO transactionDTO, User user) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal instanceof UserDetails) {
+            String username = ((UserDetails)principal).getUsername();
+        } else {
+            String username = principal.toString();
+        }
         Optional<Account> optionalSender = accountRepository.findById(transactionDTO.getSendingAccountId());
         Optional<Account> optionalOwner = accountRepository.findById(transactionDTO.getHoldingAccountId());
         if(optionalSender.isEmpty() || optionalOwner.isEmpty()) {
@@ -75,8 +85,9 @@ public class TransactionService implements TransactionServiceInterface {
         accountRepository.save(senderAccount);
     }
 
-    @Override
+
     public void sendMoneyTParty(TransactionThirdPDTO transactionThirdPDTO, User thirdPUser) {
+
         int thirdParty = (int) thirdPUser.getRoles().stream().filter(x -> x.getName().equals("ROLE_THIRDPARTY")).count();
         if(thirdParty != 1) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed to make this transaction");
@@ -99,7 +110,7 @@ public class TransactionService implements TransactionServiceInterface {
 
     }
 
-    @Override
+
     public void receiveMoneyTParty(TransactionThirdPDTO transactionThirdPDTO, User thirdPUser) {
         int thirdParty = (int) thirdPUser.getRoles().stream().filter(x -> x.getName().equals("ROLE_THIRDPARTY")).count();
         if(thirdParty != 1) {

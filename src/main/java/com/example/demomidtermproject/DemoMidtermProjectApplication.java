@@ -35,16 +35,20 @@ public class DemoMidtermProjectApplication {
 			userService.saveRole(new Role(null, "ROLE_THIRDPARTY"));
 
 			userService.saveUser(new User(null, "John Doe", "john", "1234", new ArrayList<>()));
+			userService.saveUser(new User(null, "luis Doe", "luis", "1234", new ArrayList<>()));
 			userService.saveUser(new User(null, "James Smith", "james", "1234", new ArrayList<>()));
 			userService.saveUser(new User(null, "Jane Carry", "jane", "1234", new ArrayList<>()));
 			userService.saveUser(new User(null, "Chris Anderson", "chris", "1234", new ArrayList<>()));
 			userService.saveUser(new User(null, "Barbara Anderson", "barbi", "1234", new ArrayList<>()));
+			userService.saveUser(new User(null, "Pepa Anderson", "pepa", "1234", new ArrayList<>()));
 
 			roleService.addRoleToUser("john", "ROLE_ACCOUNTHOLDER");
+			roleService.addRoleToUser("luis", "ROLE_ACCOUNTHOLDER");
 			roleService.addRoleToUser("james", "ROLE_ADMIN");
 			roleService.addRoleToUser("jane", "ROLE_USER");
 			roleService.addRoleToUser("chris", "ROLE_ADMIN");
 			roleService.addRoleToUser("barbi", "ROLE_THIRDPARTY");
+			roleService.addRoleToUser("pepa", "ROLE_THIRDPARTY");
 
 
 		};
