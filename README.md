@@ -33,7 +33,7 @@ MySQL, Spring Boot & Java
 ## Models
 
 ## Server Routes
-  
+  <img src"https://github.com/Openbank-Java-Bootcamp/Luci-Midterm-Project/blob/c1083fd6ca210a4b8ae6fadbf522a9e557d1c6ea/endpoints.png">
 
 ## Future Work
 
