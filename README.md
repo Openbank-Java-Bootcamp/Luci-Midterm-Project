@@ -36,6 +36,18 @@ MySQL, Spring Boot & Java
   <img src="https://github.com/Openbank-Java-Bootcamp/Luci-Midterm-Project/blob/c1083fd6ca210a4b8ae6fadbf522a9e557d1c6ea/endpoints.png">
 
 ## Future Work
+- Improve security system
+- Improve Transactions
+- Add some features
 
 ## Resources
+- BigDecimal documentation: https://docs.oracle.com/javase/7/docs/api/java/math/BigDecimal.html
+- Throwing Exceptions: https://rollbar.com/guides/java/how-to-throw-exceptions-in-java/
+- JPA: https://attacomsian.com/blog/spring-data-jpa-repositories
+- Spring: https://www.amitph.com/spring-boot-introduction/
+- REST: https://www.sitepoint.com/rest-api/
+- HTTP Status Code: https://www.restapitutorial.com/httpstatuscodes.html
+- REST API: https://betterprogramming.pub/building-a-spring-boot-rest-api-a-php-developers-view-part-i-6add2e794646
+- Spring Security: https://www.marcobehler.com/guides/spring-security
+- And the big Brains: Raymond and Shaun.
 
