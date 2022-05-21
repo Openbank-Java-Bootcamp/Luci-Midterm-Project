@@ -8,7 +8,7 @@ public interface TransactionServiceInterface {
 
     void makeTransaction(TransactionDTO transactionDTO, User user);
 
-   // void sendMoneyTParty(TransactionThirdPDTO transactionThirdPDTO, User thirdPUser);
+    void sendMoneyTParty(TransactionThirdPDTO transactionThirdPDTO, User thirdPUser);
 
-  //  void receiveMoneyTParty(TransactionThirdPDTO transactionThirdPDTO, User thirdPUser);
+    void receiveMoneyTParty(TransactionThirdPDTO transactionThirdPDTO, User thirdPUser);
 }

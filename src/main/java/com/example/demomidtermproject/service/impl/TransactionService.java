@@ -19,7 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
 
 @Service
-public class TransactionService implements TransactionServiceInterface {
+public abstract class TransactionService implements TransactionServiceInterface {
 
     @Autowired
     private AccountRepository accountRepository;
@@ -36,8 +36,7 @@ public class TransactionService implements TransactionServiceInterface {
     @Autowired
     private SavingsRepository savingsRepository;
 
-    @Override
-    public void makeTransaction(TransactionDTO transactionDTO, User user) {
+    public void makeTransaction(TransactionDTO transactionDTO) {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal instanceof UserDetails) {
@@ -55,12 +54,12 @@ public class TransactionService implements TransactionServiceInterface {
         Account ownerAccount = (Account) Hibernate.unproxy(accountRepository.findById(transactionDTO.getHoldingAccountId()));
 
         //Check the role and the owner
-        int notAdmin = (int) user.getRoles().stream().filter(x -> x.getName().equals("ROLE_ACCOUNTHOLDER")).count();
-        if(!senderAccount.getPrimaryOwner().getId().equals(user.getId()) && notAdmin != 0){
-            if(senderAccount.getSecondaryOwner() == null || !senderAccount.getSecondaryOwner().getId().equals(user.getId())){
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You're not the owner of this account");
-            }
+        if(!senderAccount.getPrimaryOwner().getId().equals(transactionDTO.getHoldingAccountId()) && (senderAccount.getSecondaryOwner() == null)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"The account has another owner");
+        }else if(ownerAccount.getSecondaryOwner() == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The owner does not exit");
         }
+
         //Check sufficient funds
         if(senderAccount.getBalance().getAmount().compareTo(transactionDTO.getAmount()) < 0){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You haven't money enough");
@@ -84,7 +83,6 @@ public class TransactionService implements TransactionServiceInterface {
         }
         accountRepository.save(senderAccount);
     }
-
 
     public void sendMoneyTParty(TransactionThirdPDTO transactionThirdPDTO, User thirdPUser) {
 
